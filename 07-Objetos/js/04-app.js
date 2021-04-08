@@ -7,7 +7,7 @@ const producto = {
 // const nombre = producto.nombre;
 // console.log(nombre);
 
-// Destructurgin.
+// Destructuring.
 const { nombre, precio, disponible, noExiste } = producto;
 console.log(nombre);
 console.log(precio);

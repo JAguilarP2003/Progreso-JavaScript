@@ -11,6 +11,8 @@ const producto2 = {
     valor: 199.85
 }
 
+// Push agrega al final de un arreglo.
+
 carrito.push(producto);
 carrito.push(producto2);
 

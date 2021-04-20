@@ -5,7 +5,7 @@ if (usuario && puedePagar) {
     console.log('Sí puedes comprar.');
 
 } else if (!puedePagar && !usuario) {
-    console.log('Fondos insuficientes.');
+    console.log('No puedes pagar.');
 
 } else if (!usuario) {
     console.log('Inicia sesión primero.');

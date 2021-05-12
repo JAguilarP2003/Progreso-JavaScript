@@ -1,0 +1,14 @@
+window.addEventListener('scroll', () =>{
+    // const scrollPX = window.scrollY;
+
+    // console.log(scrollPX);
+
+    const premium = document.querySelector('.premium');
+    const ubicacion = premium.getBoundingClientRect();
+
+    if (ubicacion.top < 784) {
+        console.log('EL elemento ya está visible.');
+    } else {
+        console.log('Aún no, sique bajando.');
+    }
+})

@@ -5,6 +5,7 @@ const carrito = document.querySelector('#carrito');
 const contenedorCarrito = document.querySelector('#lista-carrito tbody');
 const vaciarCarritoBtn = document.querySelector('#vaciar-carrito');
 const listaCursos = document.querySelector('#lista-cursos');
+let artsCarrito = [];
 
 registrarEventListeners();
 
@@ -46,5 +47,51 @@ function datosCurso(curso) {
         cantidad: 1
     }
 
-    console.log(info);
+    // Agrega elementos al Array de carrito.
+    artsCarrito = [...artsCarrito, info];
+
+    console.log(artsCarrito);
+
+    carritoHTML();
+}
+
+// Muestra el carrito de compras en el HTML
+function carritoHTML() {
+
+    // Limpiar el HTML (Se limpia el HTML para luego generao y así se evita que aparezcan cursos repetidos.)
+    limpiar();
+
+    // Recorre el carrito y genera el HTML
+    artsCarrito.forEach( curso =>{
+        const row = document.createElement('tr'); // El elemnto "tr"significa Table row
+        row.innerHTML = `
+            <td>
+                ${curso.titulo}
+            </td>
+        `;
+
+        // Agrega el HTML del carrito en el tbody
+        contenedorCarrito.appendChild(row);
+    })
+};
+
+
+// Elimina los cursos del tbody
+function limpiar() {
+    //Existen varias forma de realizar esta función.
+
+    /*
+    ╔══ Forma lenta ═════════════════════════╗
+    ╠════════════════════════════════════════╣
+    ║    contenedorCarrito.innerHTML = '';   ║
+    ╠════════════════════════════════════════╣
+    ║   Se reemplaza el contenido HTML por   ║
+    ║   un string vacío.                     ║
+    ╚════════════════════════════════════════╝
+    */
+
+    // Forma más efectiva (Mientras exista un hijo, se va a eliminar hasta que ya no quede ninguno.)
+    while (contenedorCarrito.firstChild) {
+        contenedorCarrito.removeChild(contenedorCarrito.firstChild);
+    }
 }

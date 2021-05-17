@@ -63,10 +63,22 @@ function carritoHTML() {
 
     // Recorre el carrito y genera el HTML
     artsCarrito.forEach( curso =>{
+        const { imagen, titulo, precio, cantidad, id } = curso;
+        console.log(curso);
         const row = document.createElement('tr'); // El elemnto "tr"significa Table row
         row.innerHTML = `
             <td>
-                ${curso.titulo}
+                <img src="${curso.imagen}" width="100">
+            </td>
+        
+            <td> ${curso.titulo} </td>
+
+            <td> ${curso.precio} </td>
+
+            <td> ${curso.cantidad} </td>
+
+            <td>
+                <a href="#" class="borrar-curso" data-id="${curso.id}"> X </a>
             </td>
         `;
 
@@ -95,3 +107,6 @@ function limpiar() {
         contenedorCarrito.removeChild(contenedorCarrito.firstChild);
     }
 }
+
+
+// 16/05/2021

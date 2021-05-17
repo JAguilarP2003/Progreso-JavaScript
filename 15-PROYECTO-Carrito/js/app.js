@@ -47,9 +47,26 @@ function datosCurso(curso) {
         cantidad: 1
     }
 
-    // Agrega elementos al Array de carrito.
-    artsCarrito = [...artsCarrito, info];
+    // Revisa si un elemento ya se encuentra dentro del carrito.
+    const existe = artsCarrito.some (curso => curso.id === info.id);
 
+    if (existe) {
+        // Actualizamos la cantidad.
+        const cursos = artsCarrito.map(curso => {
+            if (curso.id === info.id) {
+                curso.cantidad++;
+                return curso; // Restorna el objeto actualizado.
+            } else {
+                return curso; // Retorna los objetos que no son duplicados.
+            }
+        } );
+        artsCarrito = [...cursos];
+    } else {
+        // Agrega elementos al Array de carrito.
+        artsCarrito = [...artsCarrito, info];
+    }
+
+    
     console.log(artsCarrito);
 
     carritoHTML();

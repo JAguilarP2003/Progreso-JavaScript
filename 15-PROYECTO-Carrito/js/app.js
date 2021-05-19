@@ -15,6 +15,12 @@ function registrarEventListeners() {
 
     // Elimina cursos del carrito.
     carrito.addEventListener('click', eliminarCurso);
+
+    // Vacía el carrito.
+    vaciarCarritoBtn.addEventListener('click', () => {
+        artsCarrito = [];
+        limpiar();
+    });
 };
 
 
@@ -141,3 +147,4 @@ function limpiar() {
 }
 
 
+// 18/05/2021 Fecha de Finalización

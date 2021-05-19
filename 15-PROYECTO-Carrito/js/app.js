@@ -1,4 +1,4 @@
-// 13/05/2021
+// 13/05/2021 Fecha de Inicio
 
 // Variables
 const carrito = document.querySelector('#carrito');
@@ -12,6 +12,9 @@ registrarEventListeners();
 function registrarEventListeners() {
     // Cuando agregas un cusro presionando "Agregar Carrito"
     listaCursos.addEventListener('click', agregarCurso);
+
+    // Elimina cursos del carrito.
+    carrito.addEventListener('click', eliminarCurso);
 };
 
 
@@ -30,7 +33,19 @@ function agregarCurso(cheems) {
 };
 
 
-// 14/05/2021
+//Elimina un curso del carrito.
+
+function eliminarCurso(cheems) {
+    if (cheems.target.classList.contains('borrar-curso')) {
+        const cursoId = cheems.target.getAttribute('data-id');
+
+        // Elimina del arreglo de artsCarrito por el data-id
+        artsCarrito = artsCarrito.filter(curso => curso.id !== cursoId);
+
+        carritoHTML(); // Iterar sobre el carrito y mostrar su HTML.
+    }
+};
+
 
 // Realizará un Traversing para obtener la iformación del curso.
 
@@ -126,4 +141,3 @@ function limpiar() {
 }
 
 
-// 16/05/2021

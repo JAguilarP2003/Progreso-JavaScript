@@ -5,8 +5,9 @@
 
 
 
-const enviar = document.querySelector('#enviar')
+const enviar = document.querySelector('#enviar');
 
+const form = document.querySelector('#enviar-mail');
 
 // Variables para campos
 const email = document.querySelector('#email');
@@ -40,5 +41,18 @@ function validarForm(cheems) {
         console.log('Sí hay algo');
     } else {
         cheems.target.classList.add('border', 'border-red-500');
+
+        error(); // Llamando la función de error.
+    }
+}
+
+function error() { // Creará un elemento párrafo con el mensaje de error.
+    const msgError = document.createElement('p');
+    msgError.textContent = 'Asegurate de llenar todos los campos.';
+    msgError.classList.add('border', 'border-red-500', 'background-color-100', 'text-red-500', 'p-3', 'mt-5', 'text-center', 'error');
+
+    const errors = document.querySelectorAll('.error'); // Limpia los mensajes de error de modo que sólo habrá uno en pantalla.
+    if (errors.length === 0) {
+        form.appendChild(msgError);
     }
 }

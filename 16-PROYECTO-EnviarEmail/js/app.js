@@ -42,13 +42,20 @@ function validarForm(cheems) {
     } else {
         cheems.target.classList.add('border', 'border-red-500');
 
-        error(); // Llamando la función de error.
+        error('Asegurate de llenar todos los campos.'); // Llamando la función de error cuando el campo se encuentre vacío.
+    }
+
+    if (cheems.target.type === 'email') {
+        const result = cheems.target.value.indexOf('@');
+        if (result < 0) {
+            error('El Email no es válido.');  // Llamado la función si la condición de tener un @ no se cumple.
+        }
     }
 }
 
-function error() { // Creará un elemento párrafo con el mensaje de error.
+function error(mensaje) { // Creará un elemento párrafo con el mensaje de error.
     const msgError = document.createElement('p');
-    msgError.textContent = 'Asegurate de llenar todos los campos.';
+    msgError.textContent = mensaje;
     msgError.classList.add('border', 'border-red-500', 'background-color-100', 'text-red-500', 'p-3', 'mt-5', 'text-center', 'error');
 
     const errors = document.querySelectorAll('.error'); // Limpia los mensajes de error de modo que sólo habrá uno en pantalla.

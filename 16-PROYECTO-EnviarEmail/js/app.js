@@ -3,6 +3,7 @@
 
 // Variables
 
+const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
 const enviar = document.querySelector('#enviar');
@@ -31,7 +32,7 @@ function eventListeners() {
 
 function iniciar() {
     enviar.disabled = true;
-    enviar.classList.add('cursor-notallowed', 'opacity-50'); // Añade clases del Framework CSS Tailwind
+    enviar.classList.add('cursor-not-allowed', 'opacity-50'); // Añade clases del Framework CSS Tailwind
 }
 
 
@@ -41,7 +42,9 @@ function validarForm(cheems) {
 
         // Elimina los mensajes de error.
         const error = document.querySelector('p.error');
-        error.remove();
+        if (error) {
+            error.remove();
+        }
 
         cheems.target.classList.remove('border', 'border-red-500'); // Elimina la clase que ya no se utiliza, en este caso, el borde rojo.
         cheems.target.classList.add('border', 'border-green-500');
@@ -52,11 +55,11 @@ function validarForm(cheems) {
     }
 
     if (cheems.target.type === 'email') {
-        const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        
         if ( er.test( cheems.target.value ) ) {
             const error = document.querySelector('p.error');
-            error.remove();
+            if (error) {
+                error.remove();
+            }
         
             cheems.target.classList.remove('border', 'border-red-500');
             cheems.target.classList.add('border', 'border-green-500');
@@ -78,6 +81,12 @@ function validarForm(cheems) {
         ║  @ no se cumple.                                  ║
         ╚═══════════════════════════════════════════════════╝
         */
+    }
+
+
+    if ( er.test( email.value ) && asunto.value !== '' && msg.vaule !== '') {
+        enviar.disabled = false;
+        enviar.classList.remove('cursor-not-allowed', 'opacity-50');
     }
 }
 

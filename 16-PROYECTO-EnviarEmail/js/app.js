@@ -38,18 +38,46 @@ function iniciar() {
 // Valida el formulario (Dependiedo de los datos en el input, así mismo serán sus clases.)
 function validarForm(cheems) {
     if (cheems.target.value.length > 0) {
-        console.log('Sí hay algo');
-    } else {
-        cheems.target.classList.add('border', 'border-red-500');
 
+        // Elimina los mensajes de error.
+        const error = document.querySelector('p.error');
+        error.remove();
+
+        cheems.target.classList.remove('border', 'border-red-500'); // Elimina la clase que ya no se utiliza, en este caso, el borde rojo.
+        cheems.target.classList.add('border', 'border-green-500');
+    } else {
+        cheems.target.classList.remove('border', 'border-green-500'); // Elimina la clase que ya no se utiliza, en este caso, el borde verde.
+        cheems.target.classList.add('border', 'border-red-500');
         error('Asegurate de llenar todos los campos.'); // Llamando la función de error cuando el campo se encuentre vacío.
     }
 
     if (cheems.target.type === 'email') {
-        const result = cheems.target.value.indexOf('@');
-        if (result < 0) {
-            error('El Email no es válido.');  // Llamado la función si la condición de tener un @ no se cumple.
+        const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        
+        if ( er.test( cheems.target.value ) ) {
+            const error = document.querySelector('p.error');
+            error.remove();
+        
+            cheems.target.classList.remove('border', 'border-red-500');
+            cheems.target.classList.add('border', 'border-green-500');
+        } else {
+            cheems.target.classList.remove('border', 'border-green-500');
+            cheems.target.classList.add('border', 'border-red-500');
+            error('Email no válido.')
         }
+        
+        /* 
+        ╔══ Forma poco efectiva ════════════════════════════╗
+        ╠═══════════════════════════════════════════════════╣    
+        ║   const result = cheems.target.value.indexOf('@');║
+        ║   if (result < 0) {                               ║
+        ║       error('El Email no es válido.');            ║
+        ║   }                                               ║
+        ╠═══════════════════════════════════════════════════╣
+        ║  Llamando la función si la condición de tener un  ║
+        ║  @ no se cumple.                                  ║
+        ╚═══════════════════════════════════════════════════╝
+        */
     }
 }
 

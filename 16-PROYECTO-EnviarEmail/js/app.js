@@ -7,7 +7,7 @@ const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0
 
 
 const enviar = document.querySelector('#enviar');
-
+const resetear = document.querySelector('#resetBtn');
 const form = document.querySelector('#enviar-mail');
 
 // Variables para campos
@@ -25,6 +25,11 @@ function eventListeners() {
     asunto.addEventListener('blur', validarForm);
     msg.addEventListener('blur', validarForm);
 
+    // Reinicia el formulario.
+    resetear.addEventListener('click', resetF);
+
+    // Enviar Email.
+    form.addEventListener('submit', enviarEmail)
 }
 
 
@@ -100,3 +105,41 @@ function error(mensaje) { // Creará un elemento párrafo con el mensaje de erro
         form.appendChild(msgError);
     }
 }
+
+// Envía el Email.
+function enviarEmail(chems) {
+    chems.preventDefault();
+    
+
+    // Mostrar el Spinner.
+    const spinner = document.querySelector('#spinner');
+    spinner.style.display = 'flex';
+
+    // Después de 3s, ocultar el spinner y mostrar el mensaje.
+    setTimeout(()=> {
+        spinner.style.display = 'none';
+
+        // Mensaje de envío
+        const msgEnvio = document.createElement('p');
+        msgEnvio.textContent = 'Correo enviado satisfactoriamente';
+        msgEnvio.classList.add('text-center', 'my-10', 'p-3', 'text-white', 'uppercase', 'bg-green-600', 'font-bold');
+
+        // Insertar el mensaje de envío antes del Spinner.
+        form.insertBefore(msgEnvio, spinner);
+
+        setTimeout(() => {
+            msgEnvio.remove(); // Eliminar el mensaje de envío después de 5 segundos.
+            resetF();
+        }, 5000);
+    }, 3000);
+};
+
+// Resetear el formulario.
+
+function resetF(cheems) {
+    cheems.preventDefault();
+    form.reset();
+    iniciar(); // Vuelve a deshabilitarse el botón de envío.
+};
+
+// 20/05/2021 Fecha de Finalización.

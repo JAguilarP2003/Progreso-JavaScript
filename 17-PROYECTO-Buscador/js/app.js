@@ -1,10 +1,30 @@
 // 22/05/2021 Fecha de Inicio.
 
 // Varialbes
-const resul = document.querySelector('#resultado');
+const marca = document.querySelector('#marca');
 const year = document.querySelector('#year');
+const pMin = document.querySelector('#minimo');
+const pMax = document.querySelector('#maximo');
+const puertas = document.querySelector('#puertas');
+const transmision = document.querySelector('#transmision');
+const color = document.querySelector('#color');
+
+// Contenedor para los resultados.
+const resul = document.querySelector('#resultado');
+
 const maxYear = new Date().getFullYear();
 const minYear = maxYear - 10;
+
+// Generar un objeto con la búsqueda.
+const dataSearch = {
+    marca: '',
+    year: '',
+    pMin: '',
+    pMax: '',
+    puertas: '',
+    transmision: '',
+    color: '',
+}
 
 console.log(maxYear);
 console.log(minYear);
@@ -15,6 +35,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Llena las opciones de años.
     llenarYears();
+});
+
+
+// Event Listener para los Select de búsqueda.
+marca.addEventListener('change', (cheems) =>{
+    dataSearch.marca = cheems.target.value;
+});
+
+year.addEventListener('change', (cheems) =>{
+    dataSearch.year = cheems.target.value;
+});
+
+pMin.addEventListener('change', (cheems) =>{
+    dataSearch.pMin = cheems.target.value;
+});
+
+pMax.addEventListener('change', (cheems) =>{
+    dataSearch.pMax = cheems.target.value;
+});
+
+puertas.addEventListener('change', (cheems) =>{
+    dataSearch.puertas = cheems.target.value;
+});
+
+transmision.addEventListener('change', (cheems) =>{
+    dataSearch.transmision = cheems.target.value;
+});
+
+color.addEventListener('change', (cheems) =>{
+    dataSearch.color = cheems.target.value;
 });
 
 

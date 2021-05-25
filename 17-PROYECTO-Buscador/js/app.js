@@ -53,10 +53,14 @@ year.addEventListener('change', (cheems) =>{
 
 pMin.addEventListener('change', (cheems) =>{
     dataSearch.pMin = cheems.target.value;
+
+    filtrarAuto();
 });
 
 pMax.addEventListener('change', (cheems) =>{
     dataSearch.pMax = cheems.target.value;
+
+    filtrarAuto();
 });
 
 puertas.addEventListener('change', (cheems) =>{
@@ -114,7 +118,11 @@ function llenarYears() {
 // Función que filtra en base a la búsqueda.
 
 function filtrarAuto() {
-    const resulFiltro = autos.filter(filtrarMarca).filter(filtrarYear);
+    const resulFiltro = autos
+    .filter(filtrarMarca)
+    .filter(filtrarYear)
+    .filter(filtrarMin)
+    .filter(filtrarMax);
 
     //console.log(result);
 
@@ -131,6 +139,20 @@ function filtrarMarca(auto) {
 function filtrarYear(auto) {
     if (dataSearch.year) {
         return auto.year === dataSearch.year;
+    }
+    return auto;
+};
+
+function filtrarMin(auto) {
+    if (dataSearch.pMin) {
+        return auto.precio >= dataSearch.pMin;
+    }
+    return auto;
+};
+
+function filtrarMax(auto) {
+    if (dataSearch.pMax) {
+        return auto.precio <= dataSearch.pMax;
     }
     return auto;
 };

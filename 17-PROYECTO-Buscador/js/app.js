@@ -64,15 +64,21 @@ pMax.addEventListener('change', (cheems) =>{
 });
 
 puertas.addEventListener('change', (cheems) =>{
-    dataSearch.puertas = cheems.target.value;
+    dataSearch.puertas = parseInt(cheems.target.value);
+
+    filtrarAuto();
 });
 
 transmision.addEventListener('change', (cheems) =>{
     dataSearch.transmision = cheems.target.value;
+
+    filtrarAuto();
 });
 
 color.addEventListener('change', (cheems) =>{
     dataSearch.color = cheems.target.value;
+
+    filtrarAuto();
 });
 
 
@@ -122,7 +128,10 @@ function filtrarAuto() {
     .filter(filtrarMarca)
     .filter(filtrarYear)
     .filter(filtrarMin)
-    .filter(filtrarMax);
+    .filter(filtrarMax)
+    .filter(filtrarPuertas)
+    .filter(filtrarTransmision)
+    .filter(filtrarColor);
 
     //console.log(result);
 
@@ -153,6 +162,27 @@ function filtrarMin(auto) {
 function filtrarMax(auto) {
     if (dataSearch.pMax) {
         return auto.precio <= dataSearch.pMax;
+    }
+    return auto;
+};
+
+function filtrarPuertas(auto) {
+    if (dataSearch.puertas) {
+        return auto.puertas === dataSearch.puertas;
+    }
+    return auto;
+};
+
+function filtrarTransmision(auto) {
+    if (dataSearch.transmision) {
+        return auto.transmision === dataSearch.transmision;
+    }
+    return auto;
+};
+
+function filtrarColor(auto) {
+    if (dataSearch.color) {
+        return auto.color === dataSearch.color;
     }
     return auto;
 };

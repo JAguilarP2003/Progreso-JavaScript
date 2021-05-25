@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Event Listener para los Select de búsqueda.
 marca.addEventListener('change', (cheems) =>{
     dataSearch.marca = cheems.target.value;
+
+    filtrarAuto();
 });
 
 year.addEventListener('change', (cheems) =>{
@@ -97,3 +99,18 @@ function llenarYears() {
        year.appendChild(opcion); // Agrega las opciones de Año al select.
     };
 };
+
+// Función que filtra en base a la búsqueda.
+
+function filtrarAuto() {
+    const result = autos.filter(filtrarMarca);
+
+    console.log(result);
+};
+
+function filtrarMarca(auto) {
+    if (dataSearch.marca) {
+        return auto.marca === dataSearch.marca
+    }
+    return auto;
+}

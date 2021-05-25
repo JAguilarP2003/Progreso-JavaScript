@@ -46,7 +46,9 @@ marca.addEventListener('change', (cheems) =>{
 });
 
 year.addEventListener('change', (cheems) =>{
-    dataSearch.year = cheems.target.value;
+    dataSearch.year = parseInt(cheems.target.value); // Cmabia el resultado del formulario a número.
+
+    filtrarAuto();
 });
 
 pMin.addEventListener('change', (cheems) =>{
@@ -103,7 +105,7 @@ function llenarYears() {
 // Función que filtra en base a la búsqueda.
 
 function filtrarAuto() {
-    const result = autos.filter(filtrarMarca);
+    const result = autos.filter(filtrarMarca).filter(filtrarYear);
 
     console.log(result);
 };
@@ -114,3 +116,10 @@ function filtrarMarca(auto) {
     }
     return auto;
 }
+
+function filtrarYear(auto) {
+    if (dataSearch.year) {
+        return auto.year === dataSearch.year;
+    }
+    return auto;
+};

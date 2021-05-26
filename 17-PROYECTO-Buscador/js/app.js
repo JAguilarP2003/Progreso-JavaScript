@@ -133,10 +133,25 @@ function filtrarAuto() {
     .filter(filtrarTransmision)
     .filter(filtrarColor);
 
-    //console.log(result);
+    // console.log(resulFiltro);
 
     mostrar(resulFiltro);
+    
+    if (resulFiltro.length) {
+        mostrar(resulFiltro);
+    } else {
+        noResul();
+    };
 };
+
+function noResul() {
+
+    limpiar();
+    const noResul = document.createElement('div');
+    noResul.classList.add('alerta', 'error');
+    noResul.textContent = 'No hay resultados disponibles.';
+    resul.appendChild(noResul);
+}
 
 function filtrarMarca(auto) {
     if (dataSearch.marca) {
@@ -186,3 +201,5 @@ function filtrarColor(auto) {
     }
     return auto;
 };
+
+// 25/05/2021 Fecha Finalización.

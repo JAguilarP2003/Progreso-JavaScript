@@ -28,7 +28,19 @@ function addTweet(cheems) {
         return; // Evita que se ejecuten más líneas de código.
     }
 
-    console.log('Agregando tweet');
+    const tweetObj = {
+        id: Date.now(),
+        tweet
+    }
+
+    // Añadir al arreglo de Tweets.
+    tweets = [...tweets, tweetObj];
+
+    // Una vez agregado, crear HTML.
+    createHTML();   
+    
+    // Reiniciar el formulario.
+    form.reset();
 }
 
 // Mostrar Mensaje de Error
@@ -44,4 +56,33 @@ function showError(error) {
     setTimeout(() => {
         msgError.remove(); // Elimina la alerta después de 3 segundos.
     }, 3000);
+}
+
+
+// Muestra un listado de los tweets.
+
+function createHTML() {
+
+    cleanHTML();
+
+    if (tweets.length > 0) {
+        tweets.forEach(tweet => {
+            // Crear el HTML.
+            const li = document. createElement('li');
+
+            // Añadir el texto.
+            li.innerText = tweet.tweet
+
+            // Insertarlo en el HTML.
+            tweetsList.appendChild(li);
+        });
+    }
+}
+
+// Limpiar HTML.
+
+function cleanHTML() {
+    while (tweetsList.firstChild) {
+        tweetsList.removeChild(tweetsList.firstChild);
+    }
 }

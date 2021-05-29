@@ -77,11 +77,24 @@ function createHTML() {
 
     if (tweets.length > 0) {
         tweets.forEach(tweet => {
+            // Agregando un botón de Eliminar.
+            const deleteBtn = document.createElement('a');
+            deleteBtn.classList.add('borrar-tweet');
+            deleteBtn.innerText = 'X';
+
+            // Añadir la función de eliminar.
+            deleteBtn.onclick = () => {
+                deleteTweet(tweet.id);
+            }
+
             // Crear el HTML.
             const li = document. createElement('li');
 
             // Añadir el texto.
             li.innerText = tweet.tweet
+
+            // Asignar el botón.
+            li.appendChild(deleteBtn);
 
             // Insertarlo en el HTML.
             tweetsList.appendChild(li);
@@ -96,6 +109,13 @@ function syncStorage() {
     localStorage.setItem('tweets', JSON.stringify(tweets))
 }
 
+// Elimina un tweet.
+
+function deleteTweet(id) {
+    tweets = tweets.filter(tweet => tweet.id !== id);
+    createHTML();
+}
+
 // Limpiar HTML.
 
 function cleanHTML() {
@@ -103,3 +123,5 @@ function cleanHTML() {
         tweetsList.removeChild(tweetsList.firstChild);
     }
 }
+
+// 28/05/2021 Fecha Finalización.

@@ -28,8 +28,32 @@ UI.prototype.fillOptions = () => {
 
 // Instanciar UI
 const ui = new UI();
-console.log(ui);
 
 document.addEventListener('DOMContentLoaded', ()=> {
     ui.fillOptions(); // Llena el select con los años.
 })
+
+eventListeners()
+function eventListeners() {
+    const form = document.querySelector('#cotizar-seguro');
+    form.addEventListener('submit', quoteInsurance)
+}
+
+function quoteInsurance(cheems) {
+    cheems.preventDefault();
+
+    // Leer la marca seleccionada.
+    const brand = document.querySelector('#marca').value;
+
+    // Leer el año seleccionado.
+    const year = document.querySelector('#year').value;
+
+    // Leer el tipo de cobertura.
+    const type = document.querySelector('input[name="tipo"]:checked').value;
+    
+    if (brand === '' || year === '' || type === '') {
+        console.log('No pasó la validación.');
+    } else {
+        console.log('Sí pasó la validación');
+    }
+}

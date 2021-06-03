@@ -7,6 +7,53 @@ function insurance(brand, year, type) {
     this.type = type;
 }
 
+// Realiza la cotización con los datos.
+insurance.prototype.quoteInsurance = function () {
+    /*
+        1 = Americano 1.15
+        2 = Asiático 1.05
+        3 = Europeo 1.35
+    */
+
+    let amount;
+
+    const base = 2000;
+
+    switch (this.brand) {
+        case '1':
+            amount = base * 1.15;
+            break;
+        case '2':
+            amount = base * 1.05;
+            break;
+        case '3':
+            amount = base * 1.35;
+            break;
+        default:
+            break;
+    }
+
+    // Leer el año
+    const diff = new Date().getFullYear() - this.year;
+
+    // Cada año que la diferencia es mayor, el coso se reduce un 10%.
+
+    amount -= ((diff * 3) * amount) / 100;
+
+    /*
+        Si el seguro es básico, se multiplica por un 30% +.
+        Si el seguro es completo, se multiplica por un 50% +.
+    */
+
+    if (this.type === 'basico') {
+        amount *= 1.30;
+    } else {
+        amount *= 1.50;
+    }
+
+    return amount;
+}
+
 function UI() {
     
 }
@@ -80,7 +127,8 @@ function quoteInsurance(cheems) {
     ui.showMsg('Cotizando...', 'exito');
 
     // Instanciar el Seguro.
-    
+    const Insurance = new insurance(brand, year, type);
+    Insurance.quoteInsurance();
 
     // Utilizar el protoype que va a cotizar.
 }

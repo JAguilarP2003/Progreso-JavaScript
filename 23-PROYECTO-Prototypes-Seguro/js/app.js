@@ -95,6 +95,54 @@ UI.prototype.showMsg = (msg, type) => {
     }, 3000);
 }
 
+UI.prototype.showResult = (total, Insurance) => {
+    
+    const { brand, year, type } = Insurance;
+
+    let brandName;
+
+    switch (brand) {
+        case '1': 
+            brandName = 'Americano';
+            break;
+        
+        case '2': 
+            brandName = 'Asiático';
+            break;
+
+        case '3': 
+            brandName = 'Europeo';
+            break;
+
+        default:
+            break;
+    }
+
+    // Crear el resultado.
+    const div = document.createElement('div');
+    div.classList.add('mt-10');
+
+    div.innerHTML = `
+        <p class="header"> Tu Cotización </p>
+        <p class="font-bold"> Marca: <span class="font-normal"> ${brandName} </span></p>
+        <p class="font-bold"> Año: <span class="font-normal"> ${year} </span></p>
+        <p class="font-bold"> Tipo: <span class="font-normal capitalize"> ${type} </span></p>
+        <p class="font-bold"> Total: <span class="font-normal"> $${total} </span></p>
+    `;
+
+    const resultDiv = document.querySelector('#resultado');
+    
+    // Mostrar el spinner.
+    const spinner = document.querySelector('#cargando');
+    spinner.style.display = 'block';
+
+    setTimeout(() => {
+        spinner.style.display = 'none'; // Se borra el spinner 
+        resultDiv.appendChild(div); // Se muestra el resultado.
+
+    }, 3000);
+}
+
 // Instanciar UI
 const ui = new UI();
 
@@ -126,9 +174,20 @@ function quoteInsurance(cheems) {
     }
     ui.showMsg('Cotizando...', 'exito');
 
+    // Ocultar cotizaciones previas.
+    const results = document.querySelector('#resultado div');
+
+    if (results != null) {
+        results.remove();
+    }
+
     // Instanciar el Seguro.
     const Insurance = new insurance(brand, year, type);
-    Insurance.quoteInsurance();
+    const total = Insurance.quoteInsurance();
 
     // Utilizar el protoype que va a cotizar.
+    ui.showResult(total, Insurance)
+
 }
+
+// 03/06/2021 Fecha de Finalización.

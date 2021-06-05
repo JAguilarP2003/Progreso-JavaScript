@@ -19,6 +19,11 @@ class Budget {
         this.remaining = Number(budget);
         this.spending = [];
     }
+
+    newSpending(spending){
+        this.spending = [...this.spending, spending];
+        console.log(this.spending);
+    }
 }
 
 class UI {
@@ -40,7 +45,7 @@ class UI {
         if (type === 'error') {
             message.classList.add('alert-danger');
         } else {
-            message.classList.add('alert-sucess');
+            message.classList.add('alert-success');
         }
 
         // Mensaje de eror.
@@ -87,7 +92,7 @@ function addSpending(cheems) {
     // Leer los datos del formulario.
 
     const name = document.querySelector('#gasto').value;
-    const amount = document.querySelector('#cantidad').value;
+    const amount = Number(document.querySelector('#cantidad').value);
 
     // Validar.
     if (name === '' || amount === '') {
@@ -99,5 +104,21 @@ function addSpending(cheems) {
         return;
     }
 
-    console.log('Agregando gasto...');
+    // Generar un objeto con el gasto.
+
+    const spending = {
+        name,
+        amount,
+        id: Date.now()
+    }
+
+    // Añade un nuevo gasto.
+    budget.newSpending( spending );
+
+    // Mensaje de verifado.
+    ui.printAlert('Gasto agregado.');
+
+    // Reinicia el formulario.
+    form.reset();
+
 }

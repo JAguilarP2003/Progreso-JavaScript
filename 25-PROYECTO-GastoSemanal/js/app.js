@@ -20,7 +20,14 @@ class Budget {
 }
 
 class UI {
-    
+    insertBudget(amount) {
+        // Extrayendo los valores.
+        const { budget, remaining } = amount;
+
+        // Agregar al HTML
+        document.querySelector('#total').textContent = budget;
+        document.querySelector('#restante').textContent = remaining;
+    }
 }
 
 
@@ -42,4 +49,6 @@ function askBudget() {
     // Presupuesto válido.
     budget = new Budget(userBudget);
     console.log(budget);
+
+    ui.insertBudget(budget);
 }

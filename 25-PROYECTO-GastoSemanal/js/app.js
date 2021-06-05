@@ -11,16 +11,35 @@ function eventListener() {
 }
 
 // Clases.
+class Budget {
+    constructor(budget) {
+        this.budget = Number(budget);
+        this.remaining = Number(budget);
+        this.spending = [];
+    }
+}
 
+class UI {
+    
+}
+
+
+// Instanciar
+const ui = new UI();
+let budget;
 
 // Funciones.
 
 function askBudget() {
     const userBudget = prompt('¿Cuál es tu presupuesto?');
 
-    console.log(Number(userBudget));
+    // console.log(Number(userBudget));
 
     if (userBudget === '' || userBudget === null || isNaN(userBudget) || userBudget <= 0) {
         window.location.reload();
     }
+
+    // Presupuesto válido.
+    budget = new Budget(userBudget);
+    console.log(budget);
 }

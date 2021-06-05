@@ -7,7 +7,9 @@ const spending = document.querySelector('#gastos ul');
 // Eventos.
 eventListener();
 function eventListener() {
-    document.addEventListener('DOMContentLoaded', askBudget)
+    document.addEventListener('DOMContentLoaded', askBudget);
+
+    form.addEventListener('submit', addSpending)
 }
 
 // Clases.
@@ -27,6 +29,31 @@ class UI {
         // Agregar al HTML
         document.querySelector('#total').textContent = budget;
         document.querySelector('#restante').textContent = remaining;
+    }
+
+    printAlert(msg, type){
+        // Crear el div
+
+        const message = document.createElement('div');
+        message.classList.add('text-center', 'alert');
+
+        if (type === 'error') {
+            message.classList.add('alert-danger');
+        } else {
+            message.classList.add('alert-sucess');
+        }
+
+        // Mensaje de eror.
+        message.textContent = msg;
+
+        // Insertar en el HTML.
+
+        document.querySelector('.primario').insertBefore(message, form);
+
+        // Quitar el HTML.
+        setTimeout(() => {
+            message.remove();
+        }, 3000);
     }
 }
 
@@ -51,4 +78,26 @@ function askBudget() {
     console.log(budget);
 
     ui.insertBudget(budget);
+}
+
+// Añade gastos
+function addSpending(cheems) {
+    cheems.preventDefault();
+
+    // Leer los datos del formulario.
+
+    const name = document.querySelector('#gasto').value;
+    const amount = document.querySelector('#cantidad').value;
+
+    // Validar.
+    if (name === '' || amount === '') {
+        ui.printAlert('Ambos campos son obligatorios.', 'error');
+
+        return;
+    } else if (amount <= 0 || isNaN(amount)) {
+        ui.printAlert('Cantidad no válida', 'error');
+        return;
+    }
+
+    console.log('Agregando gasto...');
 }

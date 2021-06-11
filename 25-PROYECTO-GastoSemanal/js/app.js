@@ -113,6 +113,28 @@ class UI {
     updateRemaining(remaining) {
         document.querySelector('#restante').textContent = remaining;
     }
+
+    checkBudget(budgetObj) {
+        const {budget, remaining} = budgetObj;
+        const remainingDiv = document.querySelector('.restante');
+
+        // Comprobar el 25%
+        if ((budget / 4) > remaining ) {
+            remainingDiv.classList.remove('alert-sucess', 'alert-warning');
+            remainingDiv.classList.add('alert-danger');
+        } else if ((budget / 2) > remaining) {
+            remainingDiv.classList.remove('alert-sucess');
+            remainingDiv.classList.add('alert-warning');
+        }
+
+        // Si el total es <= 0
+        if (remaining <= 0) {
+            ui.printAlert('El presupuesto se ha agotado.', 'error');
+
+            form.querySelector('button[type="submit"]').disabled = true
+        }
+
+    }
 }
 
 
@@ -176,6 +198,8 @@ function addSpending(cheems) {
     ui.addSpendingList(spendings);
 
     ui.updateRemaining(remaining);
+
+    ui.checkBudget(budget);
 
     // Reinicia el formulario.
     form.reset();

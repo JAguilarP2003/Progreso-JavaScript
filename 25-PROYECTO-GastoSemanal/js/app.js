@@ -22,8 +22,15 @@ class Budget {
 
     newSpending(spending){
         this.spendings = [...this.spendings, spending];
-        console.log(this.spendings);
+        this.calculateRemaining();
     }
+
+    calculateRemaining() {
+        const spent = this.spendings.reduce( (total, spending) => total + spending.amount, 0);
+        this.remaining = this.budget - spent;
+        console.log(this.remaining);
+    }
+
 }
 
 class UI {
@@ -82,7 +89,7 @@ class UI {
             newSpending.innerHTML = `
                 ${name}
                 <span class="badge-primary badge-pill">
-                    ${amount}
+                    $${amount}
                 </span>
             `;
 
@@ -101,6 +108,10 @@ class UI {
         while (spendingList.firstChild) {
             spendingList.removeChild(spendingList.firstChild);
         }
+    }
+
+    updateRemaining(remaining) {
+        document.querySelector('#restante').textContent = remaining;
     }
 }
 
@@ -161,8 +172,10 @@ function addSpending(cheems) {
     ui.printAlert('Gasto agregado.');
 
     // Imprimir los gastos.
-    const { spendings } = budget;
+    const { spendings, remaining } = budget;
     ui.addSpendingList(spendings);
+
+    ui.updateRemaining(remaining);
 
     // Reinicia el formulario.
     form.reset();

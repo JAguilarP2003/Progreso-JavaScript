@@ -28,9 +28,12 @@ class Budget {
     calculateRemaining() {
         const spent = this.spendings.reduce( (total, spending) => total + spending.amount, 0);
         this.remaining = this.budget - spent;
-        console.log(this.remaining);
     }
 
+    deleteSpending(id) {
+        this.spendings = this.spendings.filter(spending => spending.id !== id);
+        this.calculateRemaining();
+    }
 }
 
 class UI {
@@ -70,7 +73,7 @@ class UI {
 
     addSpendingList(spendings) {
 
-        this.cleanHTLM(); // Slimina el HTML previo
+        this.cleanHTLM(); // Elimina el HTML previo
 
         // Iterar sobre los gastos
 
@@ -97,6 +100,9 @@ class UI {
             const deleteBtn = document.createElement('button');
             deleteBtn.classList.add('btn', 'btn-danger', 'borrar-gasto');
             deleteBtn.innerHTML = '&times'
+            deleteBtn.onclick = () => {
+                deleteSpending(id);
+            }
             newSpending.appendChild(deleteBtn);
 
             // Agregar al HTML.
@@ -125,6 +131,9 @@ class UI {
         } else if ((budget / 2) > remaining) {
             remainingDiv.classList.remove('alert-sucess');
             remainingDiv.classList.add('alert-warning');
+        } else {
+            remainingDiv.classList.remove('alert-danger', 'alert-warning');
+            remainingDiv.classList.add('alert-sucess');
         }
 
         // Si el total es <= 0
@@ -205,3 +214,20 @@ function addSpending(cheems) {
     form.reset();
 
 }
+
+
+function deleteSpending(id) {
+    //Elimina gastos del objeto.
+    budget.deleteSpending(id);
+
+    //Elimina los gastos del HTML.
+    const {spendings, remaining} = budget;
+
+    ui.addSpendingList(spendings);
+    
+    ui.updateRemaining(remaining);
+
+    ui.checkBudget(budget);
+}
+
+// 10/06/2021 Fecha de Finalización.

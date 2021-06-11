@@ -1,6 +1,6 @@
 // 04/06/2021 Fecha Inicio.
 const form = document.querySelector('#agregar-gasto');
-const spending = document.querySelector('#gastos ul');
+const spendingList = document.querySelector('#gastos ul');
 
 // Variables y Selectores.
 
@@ -17,12 +17,12 @@ class Budget {
     constructor(budget) {
         this.budget = Number(budget);
         this.remaining = Number(budget);
-        this.spending = [];
+        this.spendings = [];
     }
 
     newSpending(spending){
-        this.spending = [...this.spending, spending];
-        console.log(this.spending);
+        this.spendings = [...this.spendings, spending];
+        console.log(this.spendings);
     }
 }
 
@@ -59,6 +59,48 @@ class UI {
         setTimeout(() => {
             message.remove();
         }, 3000);
+    }
+
+    addSpendingList(spendings) {
+
+        this.cleanHTLM(); // Slimina el HTML previo
+
+        // Iterar sobre los gastos
+
+        spendings.forEach( spending => {
+            const {amount, name, id} = spending;
+
+            // Crear una lista.
+            const newSpending = document.createElement('li');
+            newSpending.className = 'list-group-item d-flex justify-content-between align-items-center';
+            // newSpending.setAttribute('data-id', id);
+            newSpending.dataset.id = id;
+
+
+
+            // Agregar el HTML del gasto.
+            newSpending.innerHTML = `
+                ${name}
+                <span class="badge-primary badge-pill">
+                    ${amount}
+                </span>
+            `;
+
+            // Btn para borrar el gasto.
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('btn', 'btn-danger', 'borrar-gasto');
+            deleteBtn.innerHTML = '&times'
+            newSpending.appendChild(deleteBtn);
+
+            // Agregar al HTML.
+            spendingList.appendChild(newSpending);
+        })
+    }
+
+    cleanHTLM() {
+        while (spendingList.firstChild) {
+            spendingList.removeChild(spendingList.firstChild);
+        }
     }
 }
 
@@ -115,8 +157,12 @@ function addSpending(cheems) {
     // Añade un nuevo gasto.
     budget.newSpending( spending );
 
-    // Mensaje de verifado.
+    // Mensaje de verificado.
     ui.printAlert('Gasto agregado.');
+
+    // Imprimir los gastos.
+    const { spendings } = budget;
+    ui.addSpendingList(spendings);
 
     // Reinicia el formulario.
     form.reset();

@@ -23,6 +23,10 @@ class Appts {
 
         console.log(this.appts);
     }
+
+    deleteAppt(id) {
+        this.appts = this.appts.filter(appt => appt.id !== id);
+    }
 }
 
 class UI {
@@ -91,6 +95,13 @@ class UI {
                 <span class="font-weight-bolder"> Síntomas: </span> ${symptoms}
             `;
 
+            // Botón para eliminar la cita.
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('btn', 'btn-danger', 'mr-2');
+            deleteBtn.innerHTML = 'Eliminar &times';
+
+            deleteBtn.onclick = () => deleteAppt (id);
+
             // Agregar los párrafos al divAppt.
             divAppt.appendChild(petParagraph);
             divAppt.appendChild(ownerParagraph);
@@ -98,6 +109,7 @@ class UI {
             divAppt.appendChild(dateParagraph);
             divAppt.appendChild(hourParagraph);
             divAppt.appendChild(symptomsParagraph);
+            divAppt.appendChild(deleteBtn);
 
             // Agregar las citas al HTML.
             containerAppts.appendChild(divAppt);
@@ -180,4 +192,15 @@ function restartObj() {
     apptObj.date = '';
     apptObj.hour = '';
     apptObj.symptoms = '';
+}
+
+function deleteAppt(id) {
+    // Eliminar la cita.
+    manageAppts.deleteAppt(id);
+
+    // Mostrar mensaje.
+    ui.printAlert('La cita fue eliminada exitosamente.');
+
+    // Refrescar las citas.
+    ui.printAppts(manageAppts);
 }

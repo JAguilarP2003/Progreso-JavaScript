@@ -17,6 +17,12 @@ class Appts {
     constructor(){
         this.appts = [];
     }
+
+    addAppt(appt) {
+        this.appts = [...this.appts, appt];
+
+        console.log(this.appts);
+    }
 }
 
 class UI {
@@ -89,4 +95,28 @@ function newAppt(cheems) {
         ui.printAlert('Todos los campos son obligatorios.', 'error');
         return;
     }
+
+    // Genera un id único.
+    apptObj.id = Date.now();
+
+    // Creando una nuvea cita.
+    manageAppts.addAppt({...apptObj});
+
+    // Reiniciar el objeto para la validación.
+    restartObj();
+
+    // Reiniciar el formulario.
+    form.reset();
+
+    // Mostrar el HTML.
+}
+
+
+function restartObj() {
+    apptObj.pet = '';
+    apptObj.owner = '';
+    apptObj.tel = '';
+    apptObj.date = '';
+    apptObj.hour = '';
+    apptObj.symptoms = '';
 }

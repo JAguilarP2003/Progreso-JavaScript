@@ -27,6 +27,10 @@ class Appts {
     deleteAppt(id) {
         this.appts = this.appts.filter(appt => appt.id !== id);
     }
+
+    editAppt(updatedAppt){
+        this.appts = this.appts.map( appt => appt.id === updatedAppt.id ? updatedAppt : appt );
+    }
 }
 
 class UI {
@@ -190,6 +194,9 @@ function newAppt(cheems) {
         ui.printAlert('Editado correctamente.');
 
         // Pasar el objeto de la cita a edición.
+        manageAppts.editAppt({...apptObj});
+
+        // Regresar el texto del botón.
         form.querySelector('button[type="submit"]').textContent = 'Crear Cita';
 
         // Quitar modo edición.
@@ -262,3 +269,6 @@ function loadEdit(appt) {
 
     editing = true;
 }
+
+
+// 12/06/2021 Fecha de Finalización.

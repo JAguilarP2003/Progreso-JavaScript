@@ -13,6 +13,8 @@ const symptomsInput = document.querySelector('#sintomas');
 const form = document.querySelector('#nueva-cita');
 const containerAppts = document.querySelector('#citas');
 
+let editing;
+
 class Appts {
     constructor(){
         this.appts = [];
@@ -20,8 +22,6 @@ class Appts {
 
     addAppt(appt) {
         this.appts = [...this.appts, appt];
-
-        console.log(this.appts);
     }
 
     deleteAppt(id) {
@@ -98,9 +98,26 @@ class UI {
             // Botón para eliminar la cita.
             const deleteBtn = document.createElement('button');
             deleteBtn.classList.add('btn', 'btn-danger', 'mr-2');
-            deleteBtn.innerHTML = 'Eliminar &times';
+            deleteBtn.innerHTML = `
+                Eliminar
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            `;
 
             deleteBtn.onclick = () => deleteAppt (id);
+
+            // Botón para editar la cita.
+            const editBtn = document.createElement('button');
+            editBtn.classList.add('btn','btn-info');
+            editBtn.innerHTML = `
+                Editar 
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                </svg>
+            `;
+            editBtn.onclick = () => loadEdit(appt);
 
             // Agregar los párrafos al divAppt.
             divAppt.appendChild(petParagraph);
@@ -110,6 +127,7 @@ class UI {
             divAppt.appendChild(hourParagraph);
             divAppt.appendChild(symptomsParagraph);
             divAppt.appendChild(deleteBtn);
+            divAppt.appendChild(editBtn);
 
             // Agregar las citas al HTML.
             containerAppts.appendChild(divAppt);
@@ -168,11 +186,24 @@ function newAppt(cheems) {
         return;
     }
 
-    // Genera un id único.
-    apptObj.id = Date.now();
+    if (editing) {
+        ui.printAlert('Editado correctamente.');
 
-    // Creando una nuvea cita.
-    manageAppts.addAppt({...apptObj});
+        // Pasar el objeto de la cita a edición.
+        form.querySelector('button[type="submit"]').textContent = 'Crear Cita';
+
+        // Quitar modo edición.
+        editing = false;
+    } else {
+        // Genera un id único.
+        apptObj.id = Date.now();
+
+        // Creando una nuvea cita.
+        manageAppts.addAppt({...apptObj});
+
+        // Mensaje de agregado correctamente.
+        ui.printAlert('Se agregó correctamente.');
+    }
 
     // Reiniciar el objeto para la validación.
     restartObj();
@@ -203,4 +234,31 @@ function deleteAppt(id) {
 
     // Refrescar las citas.
     ui.printAppts(manageAppts);
+}
+
+// Cargar los datos y el morod edición.
+function loadEdit(appt) {
+    const {pet, owner, tel, date, hour, symptoms, id} = appt;
+
+    // Llenar lo inputs.
+    petInput.value = pet;
+    ownerInput.value = owner;
+    telInput.value = tel;
+    dateInput.value = date;
+    hourInput.value = hour;
+    symptomsInput.value = symptoms;
+
+    // Lenar el objeto.
+    apptObj.pet = pet;
+    apptObj.owner = owner;
+    apptObj.tel = tel;
+    apptObj.date = date;
+    apptObj.hour = hour;
+    apptObj.symptoms = symptoms;
+    apptObj.id = id;
+
+    // Cambiar el texto del botón.
+    form.querySelector('button[type="submit"]').textContent = 'Guardar Cambios';
+
+    editing = true;
 }

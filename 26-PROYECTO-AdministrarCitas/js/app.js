@@ -11,7 +11,7 @@ const symptomsInput = document.querySelector('#sintomas');
 
 // UI.
 const form = document.querySelector('#nueva-cita');
-const ctrAppt = document.querySelector('#citas');
+const containerAppts = document.querySelector('#citas');
 
 class Appts {
     constructor(){
@@ -48,6 +48,66 @@ class UI {
         setTimeout(() => {
             divMsg.remove();
         }, 5000);
+    }
+
+    printAppts({appts}){
+
+        this.cleanHTML();
+
+        appts.forEach(appt => {
+            const {pet, owner, tel, date, hour, symptoms, id} = appt;
+
+            const divAppt = document.createElement('div');
+            divAppt.classList.add('cita', 'p-3');
+            divAppt.dataset.id = id;
+
+            // Scripting.
+            const petParagraph = document.createElement('h2');
+            petParagraph.classList.add('card-title', 'font-weight-bolder');
+            petParagraph.textContent = pet;
+
+            const ownerParagraph = document.createElement('p');
+            ownerParagraph.innerHTML= `
+                <span class="font-weight-bolder"> Propietario: </span> ${owner}
+            `;
+
+            const telParagraph = document.createElement('p');
+            telParagraph.innerHTML= `
+                <span class="font-weight-bolder"> Teléfono: </span> ${tel}
+            `;
+
+            const dateParagraph = document.createElement('p');
+            dateParagraph.innerHTML= `
+                <span class="font-weight-bolder"> Fecha: </span> ${date}
+            `;
+
+            const hourParagraph = document.createElement('p');
+            hourParagraph.innerHTML= `
+                <span class="font-weight-bolder"> Hora: </span> ${hour}
+            `;
+
+            const symptomsParagraph = document.createElement('p');
+            symptomsParagraph.innerHTML= `
+                <span class="font-weight-bolder"> Síntomas: </span> ${symptoms}
+            `;
+
+            // Agregar los párrafos al divAppt.
+            divAppt.appendChild(petParagraph);
+            divAppt.appendChild(ownerParagraph);
+            divAppt.appendChild(telParagraph);
+            divAppt.appendChild(dateParagraph);
+            divAppt.appendChild(hourParagraph);
+            divAppt.appendChild(symptomsParagraph);
+
+            // Agregar las citas al HTML.
+            containerAppts.appendChild(divAppt);
+        });
+    };
+
+    cleanHTML() {
+        while (containerAppts.firstChild) {
+            containerAppts.removeChild(containerAppts.firstChild);
+        }
     }
 }
 
@@ -109,6 +169,7 @@ function newAppt(cheems) {
     form.reset();
 
     // Mostrar el HTML.
+    ui.printAppts(manageAppts);
 }
 
 

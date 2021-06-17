@@ -1,3 +1,8 @@
+
+import { eliminarCita, cargarEdicion } from '../functions.js';
+
+import { contenedorCitas, heading } from '../selectors.js'
+
 class UI {
 
     constructor({citas}) {
@@ -103,4 +108,4 @@ class UI {
    }
 }
 
-export default UI;
+export default UI

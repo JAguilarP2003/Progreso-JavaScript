@@ -36,6 +36,40 @@
 
             return;
         }
+
+        // Crear un objeto con la información.
+        const customer = {
+            name,
+            email,
+            tel,
+            company,
+        }
+
+        customer.id = Date.now();
+        createNewCustomer(customer);
+
+    }
+
+    function createNewCustomer(customer) {
+        const transaction = DB.transaction('crm', 'readwrite');
+
+        const objectStore = transaction.objectStore('crm');
+
+        objectStore.add(customer);
+        
+        transaction.onerror = function () {
+            printAlert('Hubo un error', 'error')
+        };
+
+        transaction.oncomplete = function () {
+            console.log('Cliente agregado.');
+
+            printAlert('El cliente se agregó correctamente.');
+
+            setTimeout(() => {
+                window.location.href = 'index.html'
+            }, 3000);
+        }
     }
 
     function printAlert(msg, type) {
@@ -50,7 +84,7 @@
             if (type === 'error') {
                 divMsg.classList.add('bg-red-100', 'border-red-400', 'text-red-700');
             } else {
-                divMsg.classList.add('bg-green-100', ' border-green-400', 'text-green-700');
+                divMsg.classList.add('bg-green-100', 'border-green-400', 'text-green-700');
             }
 
             divMsg.textContent = msg;

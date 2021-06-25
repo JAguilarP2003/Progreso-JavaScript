@@ -18,7 +18,7 @@
         };
 
         createDB.onsuccess = function () {
-            DB= createDB.result;
+            DB = createDB.result;
         };
 
         createDB.onupgradeneeded = function (cheems) {
@@ -26,12 +26,13 @@
 
             const objectStore = db.createObjectStore('crm', {keyPath: 'id', autoIncrement: true});
 
-            objectStore.createIndex('nombre', ' nombre', {unique: false});
-            objectStore.createIndex('email', ' email', {unique: true});
-            objectStore.createIndex('tel', ' tel', {unique: false});
-            objectStore.createIndex('empresa', ' empresa', {unique: false});
-            objectStore.createIndex('id', ' id', {unique: true});
+            objectStore.createIndex('nombre', 'nombre', {unique: false});
+            objectStore.createIndex('email', 'email', {unique: true});
+            objectStore.createIndex('tel', 'tel', {unique: false});
+            objectStore.createIndex('empresa', 'empresa', {unique: false});
+            objectStore.createIndex('id', 'id', {unique: true});
+
+            console.log('DB lista y creada.');
         }
-        console.log('DB lista y creada.');
     }
 })();

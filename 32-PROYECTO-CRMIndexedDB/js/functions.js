@@ -1,17 +1,5 @@
-function conectDB() {
-    const openConection = window.indexedDB.open('crm', 1);
-
-    openConection.onerror = function () {
-        console.log('Hubo un error');
-    };
-
-    openConection.onsuccess = function () {
-        DB = openConection.result;
-    }
-}
-
 function printAlert(msg, type) {
-    
+
     const form = document.querySelector('#formulario');
 
     const alert = document.querySelector('.alerta');

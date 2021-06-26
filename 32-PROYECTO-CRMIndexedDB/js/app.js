@@ -4,13 +4,42 @@
 
     let DB;
 
+    const customerList = document.querySelector('#listado-clientes');
+
     document.addEventListener('DOMContentLoaded',() => {
         createDB();
 
         if (window.indexedDB.open('crm', 1)) {
             getCustomers();
         }
+
+        customerList.addEventListener('click', deleteRecord);
     });
+
+    function deleteRecord(cheems) {
+        if (cheems.target.classList.contains('eliminar')) {
+            const idDelete = Number(cheems.target.dataset.cliente);
+
+            const confirmDeletion = confirm('Deseas eliminar este cliente?');
+
+            if(confirmDeletion) {
+                const transaction = DB.transaction(['crm'], 'readwrite');
+                const objectStore = transaction.objectStore('crm');
+
+                objectStore.delete(idDelete);
+
+                transaction.oncomplete = function () {
+                    console.log('Eliminado...');
+
+                    cheems.target.parentElement.parentElement.remove();
+                };
+
+                transaction.onerror = function () {
+                    console.log('Hubo un error.');
+                }
+            };
+        }
+    }
 
     // Crea la base de datod de IndexDB.
     function createDB() {
@@ -58,7 +87,6 @@
                 if (cursor) {
                     const { name, company, email, tel, id } = cursor.value;
 
-                    const customerList = document.querySelector('#listado-clientes');
                     customerList.innerHTML += ` 
                         <tr>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -73,7 +101,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5">
                                 <a href="editar-cliente.html?id=${id}" class="text-teal-600 hover:text-teal-900 mr-5">Editar</a>
-                                <a href="#" data-cliente="${id}" class="text-red-600 hover:text-red-900">Eliminar</a>
+                                <a href="#" data-cliente="${id}" class="text-red-600 hover:text-red-900 eliminar">Eliminar</a>
                             </td>
                         </tr>
                     `;
@@ -86,3 +114,5 @@
     }
 
 })();
+
+// 25/06/2021 Fecha de Finalización.

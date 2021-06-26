@@ -10,6 +10,17 @@
         form.addEventListener('submit', validateCustomer);
     });
 
+    function conectDB() {
+        const openConection = window.indexedDB.open('crm', 1);
+    
+        openConection.onerror = function () {
+            console.log('Hubo un error');
+        };
+    
+        openConection.onsuccess = function () {
+            DB = openConection.result;
+        }
+    }
 
     function validateCustomer(cheems) {
         cheems.preventDefault();

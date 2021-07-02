@@ -23,6 +23,7 @@ function searchWeather(cheems) {
     }
 
     // Consultar la API
+    consultAPI(city, country)
 }
 
 function showError(msg) {
@@ -46,6 +47,23 @@ function showError(msg) {
             alert.remove();
         }, 5000);
     }
-
-    
 }
+
+function consultAPI(city, country) {
+
+    const appId = '40a65113dee798ec8ec98c5da9e15d7c';
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${appId}`;
+
+
+    fetch(url)
+        .then(answer => answer.json())
+        .then(data => {
+            console.log(data);
+            if (data.cod === '404') {
+                showError('Ciudad no encontrada')
+            }
+        })
+
+}
+

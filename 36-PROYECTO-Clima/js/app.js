@@ -1,7 +1,7 @@
 // 01/07/2021 - Fecha de Inicio.
 
 const container = document.querySelector('.container');
-const reult = document.querySelector('#resultado');
+const result = document.querySelector('#resultado');
 const form = document.querySelector('#formulario');
 
 window.addEventListener('load', ()=> {
@@ -59,11 +59,39 @@ function consultAPI(city, country) {
     fetch(url)
         .then(answer => answer.json())
         .then(data => {
-            console.log(data);
+
+            cleanHTML(); // Limpiar el HTML previo.
+
             if (data.cod === '404') {
                 showError('Ciudad no encontrada')
+                return;
             }
-        })
 
+            //Imprime la respuesta en el HTML
+            showWeather(data);
+        })
 }
 
+function showWeather(data) {
+    const { main: { temp, temp_max, temp_min } } = data;
+
+    const celciusDegrees = kelvinToCelcius(temp);
+
+    const current = document.createElement('p');
+    current.innerHTML = `${celciusDegrees} &#8451`;
+    current.classList.add('font-bold', 'text-6xl');
+
+    const divResult = document.createElement('div');
+    divResult.classList.add('text-center', 'text-white');
+    divResult.appendChild(current);
+
+    result.appendChild(divResult);
+}
+
+const kelvinToCelcius = degrees => parseInt(degrees - 273.15);
+
+function cleanHTML() {
+    while (result.firstChild) {
+        result.removeChild(result.firstChild);
+    }
+}

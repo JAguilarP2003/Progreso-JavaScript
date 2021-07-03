@@ -60,6 +60,8 @@ function consultAPI(city, country) {
         .then(answer => answer.json())
         .then(data => {
 
+            console.log(data);
+
             cleanHTML(); // Limpiar el HTML previo.
 
             if (data.cod === '404') {
@@ -73,17 +75,34 @@ function consultAPI(city, country) {
 }
 
 function showWeather(data) {
-    const { main: { temp, temp_max, temp_min } } = data;
+    const { name, main: { temp, temp_max, temp_min } } = data;
 
     const celciusDegrees = kelvinToCelcius(temp);
+    const max = kelvinToCelcius(temp_max);
+    const min = kelvinToCelcius(temp_min);
+
+    const cityName = document.createElement('p');
+    cityName.textContent = `Clima en ${name}`;
+    cityName.classList.add('font-bold', 'text-2xl');
 
     const current = document.createElement('p');
     current.innerHTML = `${celciusDegrees} &#8451`;
     current.classList.add('font-bold', 'text-6xl');
 
+    const tempMax = document.createElement('p');
+    tempMax.innerHTML = `Max: ${max} &#8451`;
+    tempMax.classList.add('text-xl');
+
+    const tempMin = document.createElement('p');
+    tempMin.innerHTML = `Min: ${min} &#8451`;
+    tempMin.classList.add('text-xl');
+
     const divResult = document.createElement('div');
     divResult.classList.add('text-center', 'text-white');
+    divResult.appendChild(cityName);
     divResult.appendChild(current);
+    divResult.appendChild(tempMax);
+    divResult.appendChild(tempMin);
 
     result.appendChild(divResult);
 }

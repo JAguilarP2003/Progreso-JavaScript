@@ -56,6 +56,8 @@ function consultAPI(city, country) {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${appId}`;
 
 
+    Spinner();
+
     fetch(url)
         .then(answer => answer.json())
         .then(data => {
@@ -114,3 +116,22 @@ function cleanHTML() {
         result.removeChild(result.firstChild);
     }
 }
+
+function Spinner() {
+
+    cleanHTML();
+
+    const divSpinner = document.createElement('div');
+    divSpinner.classList.add('sk-folding-cube');
+
+    divSpinner. innerHTML = `
+        <div class="sk-cube1 sk-cube"></div>
+        <div class="sk-cube2 sk-cube"></div>
+        <div class="sk-cube4 sk-cube"></div>
+        <div class="sk-cube3 sk-cube"></div>
+    `;
+
+    result.appendChild(divSpinner);
+}
+
+// 03/07/2021 - Fecha de Finalización.

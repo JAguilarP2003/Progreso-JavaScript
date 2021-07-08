@@ -2,6 +2,8 @@
 
 import * as UI from './interfaz.js';
 
+import API from './api.js';
+
 UI.searchForm.addEventListener('submit', searchSong);
 
 function searchSong(cheems) {
@@ -24,4 +26,6 @@ function searchSong(cheems) {
     }
 
     // Consultar la API.
+    const search = new API(artist, song);
+    search.consultAPI();
 }

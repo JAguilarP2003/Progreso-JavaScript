@@ -21,6 +21,8 @@ function validateForm(cheems) {
         showAlert('Agrega un término de busqueda.');
         return;
     }
+
+    searchImgs(searchTerm);
 }
 
 function showAlert(msg) {
@@ -44,4 +46,20 @@ function showAlert(msg) {
             alert.remove();
         }, 3000);
     }
+}
+
+function searchImgs(term) {
+    const key = '22421346-17d124c6dd18b79b45c27098e';
+
+    const url = `https://pixabay.com/api/?key=${key}&q=${term}`;
+
+    fetch(url)
+        .then(answer => answer.json())
+        .then(result => {
+            showImgs(result.hits);
+        })
+}
+
+function showImgs(imgs) {
+    console.log(imgs);
 }

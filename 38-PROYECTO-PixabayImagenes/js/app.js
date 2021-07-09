@@ -4,6 +4,8 @@ const result = document.querySelector('#resultado');
 
 const form = document.querySelector('#formulario');
 
+const registerPerPage = 50;
+let totalPags;
 
 window.onload = () =>  {
 
@@ -51,17 +53,21 @@ function showAlert(msg) {
 function searchImgs(term) {
     const key = '22421346-17d124c6dd18b79b45c27098e';
 
-    const url = `https://pixabay.com/api/?key=${key}&q=${term}&per_page=100`;
+    const url = `https://pixabay.com/api/?key=${key}&q=${term}`;
 
     fetch(url)
         .then(answer => answer.json())
         .then(result => {
+            totalPags = calculatePags(result.totalHits);
             showImgs(result.hits);
         })
 }
 
+function calculatePags(total) {
+    return parseInt(Math.ceil(total / registerPerPage));
+}
+
 function showImgs(imgs) {
-    console.log(imgs);
 
     while (result.firstChild) {
         result.removeChild(result.firstChild);

@@ -6,6 +6,7 @@ const form = document.querySelector('#formulario');
 
 const registerPerPage = 50;
 let totalPags;
+let iterator;
 
 window.onload = () =>  {
 
@@ -63,6 +64,15 @@ function searchImgs(term) {
         })
 }
 
+// Generador que va a registrar la cantidad de elementos de acuerdo a las páginas.
+
+function *createPager(total) {
+    console.log(total);
+    for (let i = 1; i <= total; i++) {
+        yield i;
+    }
+}
+
 function calculatePags(total) {
     return parseInt(Math.ceil(total / registerPerPage));
 }
@@ -108,4 +118,9 @@ function showImgs(imgs) {
         `;
     });
 
+    printPager();
+}
+
+function printPager() {
+    iterator = createPager(totalPags);
 }

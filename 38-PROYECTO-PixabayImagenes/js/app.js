@@ -9,6 +9,7 @@ const paginationDiv = document.querySelector('#paginacion');
 const registerPerPage = 50;
 let totalPags;
 let iterator;
+let currentPage = 1;
 
 window.onload = () =>  {
 
@@ -27,7 +28,7 @@ function validateForm(cheems) {
         return;
     }
 
-    searchImgs(searchTerm);
+    searchImgs();
 }
 
 function showAlert(msg) {
@@ -53,10 +54,12 @@ function showAlert(msg) {
     }
 }
 
-function searchImgs(term) {
-    const key = '22421346-17d124c6dd18b79b45c27098e';
+function searchImgs() {
 
-    const url = `https://pixabay.com/api/?key=${key}&q=${term}&per_page=${registerPerPage}`;
+    const term = document.querySelector('#termino').value;
+
+    const key = '22421346-17d124c6dd18b79b45c27098e';
+    const url = `https://pixabay.com/api/?key=${key}&q=${term}&per_page=${registerPerPage}&page=${currentPage}`;
 
     fetch(url)
         .then(answer => answer.json())
@@ -69,7 +72,6 @@ function searchImgs(term) {
 // Generador que va a registrar la cantidad de elementos de acuerdo a las páginas.
 
 function *createPager(total) {
-    console.log(total);
     for (let i = 1; i <= total; i++) {
         yield i;
     }
@@ -142,9 +144,16 @@ function printPager() {
         btn.href = '#';
         btn.dataset.page = value;
         btn.textContent = value;
-        btn.classList.add('siguiente', 'mx_auto', 'bg-yellow-400', 'px-4', 'py-1', 'mr-2', 'font-bold', 'mb-10', 'uppercase', 'rounded');
+        btn.classList.add('siguiente', 'mx_auto', 'bg-yellow-400', 'px-4', 'py-1', 'mr-2', 'font-bold', 'mb-5', 'rounded');
 
+        btn.onclick = () => {
+            currentPage = value;
+
+            searchImgs();
+        }
 
         paginationDiv.appendChild(btn);
     }
 }
+
+// 09/07/2021 - Fecha de Finalización.

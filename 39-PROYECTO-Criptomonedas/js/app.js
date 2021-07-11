@@ -58,8 +58,25 @@ function submitForm(cheems) {
         showAlert('Todos los campos son obligatorios')
         return;
     }
+
+    // Consultar la API con los resultados.
 }
 
 function showAlert(msg) {
-    console.log(msg);
+
+    const errorExist = document.querySelector('.error');
+
+    if (!errorExist) {
+        const divMsg = document.createElement('div');
+        divMsg.classList.add('error');
+    
+        // Mensaje de error.
+        divMsg.textContent = msg
+    
+        form.appendChild(divMsg);
+    
+        setTimeout(() => {
+            divMsg.remove();
+        }, 3000);
+    }
 }

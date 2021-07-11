@@ -1,6 +1,13 @@
 // 10/07/2021 - Fecha Inicio.
 
 const cryptosSelect = document.querySelector('#criptomonedas');
+const currencySelect = document.querySelector('#moneda');
+const form = document.querySelector('#formulario');
+
+const searchObj = {
+    currency: '',
+    crypto: ''
+}
 
 // Crear un Promise.
 const getCrypto = cryptos => new Promise (resolve => {
@@ -9,6 +16,11 @@ const getCrypto = cryptos => new Promise (resolve => {
 
 document.addEventListener('DOMContentLoaded', () => {
     checkCrypto();
+
+    form.addEventListener('submit', submitForm);
+
+    cryptosSelect.addEventListener('change', readValue);
+    currencySelect.addEventListener('change', readValue);
 })
 
 function checkCrypto() {
@@ -29,4 +41,25 @@ function selectCryptos(cryptos) {
         option.textContent = FullName;
         cryptosSelect.appendChild(option)
     })
+}
+
+function readValue(cheems) {
+    searchObj[cheems.target.name] = cheems.target.value
+    console.log(searchObj);
+}
+
+function submitForm(cheems) {
+    cheems.preventDefault();
+
+    // Validar.
+    const {currency, crypto} = searchObj;
+
+    if (currency === '' || crypto === '') {
+        showAlert('Todos los campos son obligatorios')
+        return;
+    }
+}
+
+function showAlert(msg) {
+    console.log(msg);
 }

@@ -60,6 +60,7 @@ function submitForm(cheems) {
     }
 
     // Consultar la API con los resultados.
+    consultAPI();
 }
 
 function showAlert(msg) {
@@ -79,4 +80,20 @@ function showAlert(msg) {
             divMsg.remove();
         }, 3000);
     }
+}
+
+function consultAPI () {
+    const {currency, crypto} = searchObj;
+
+    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${crypto}&tsyms=${currency}`;
+
+    fetch(url)
+        .then(answer => answer.json())
+        .then(result => {
+            showQuote(result.DISPLAY[crypto][currency]);
+        })
+}
+
+function showQuote(quote) {
+    console.log(quote);
 }

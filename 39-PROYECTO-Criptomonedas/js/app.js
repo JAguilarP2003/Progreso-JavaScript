@@ -87,6 +87,8 @@ function consultAPI () {
 
     const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${crypto}&tsyms=${currency}`;
 
+    showSpinner();
+
     fetch(url)
         .then(answer => answer.json())
         .then(result => {
@@ -126,4 +128,20 @@ function cleanHTML() {
     while (result.firstChild) {
         result.removeChild(result.firstChild);
     }
+}
+
+function showSpinner() {
+    cleanHTML();
+
+    const spinner = document.createElement('div');
+    spinner.classList.add('sk-folding-cube');
+
+    spinner.innerHTML = `
+        <div class="sk-cube1 sk-cube"></div>
+        <div class="sk-cube2 sk-cube"></div>
+        <div class="sk-cube4 sk-cube"></div>
+        <div class="sk-cube3 sk-cube"></div>
+    `;
+
+    result.appendChild(spinner)
 }

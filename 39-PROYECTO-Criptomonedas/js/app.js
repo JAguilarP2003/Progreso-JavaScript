@@ -3,6 +3,7 @@
 const cryptosSelect = document.querySelector('#criptomonedas');
 const currencySelect = document.querySelector('#moneda');
 const form = document.querySelector('#formulario');
+const result = document.querySelector('#resultado');
 
 const searchObj = {
     currency: '',
@@ -45,7 +46,6 @@ function selectCryptos(cryptos) {
 
 function readValue(cheems) {
     searchObj[cheems.target.name] = cheems.target.value
-    console.log(searchObj);
 }
 
 function submitForm(cheems) {
@@ -95,5 +95,35 @@ function consultAPI () {
 }
 
 function showQuote(quote) {
-    console.log(quote);
+    cleanHTML();
+
+    const { PRICE, HIGHDAY, LOWDAY, CHANGEPCT24HOUR, LASTUPDATE } = quote;
+
+    const price = document.createElement('p');
+    price.classList.add('precio');
+    price.innerHTML = `El Precio es de: <span>${PRICE}</span>`;
+
+    const maxPrice = document.createElement('p');
+    maxPrice.innerHTML = `El Precio más alto del día es de: <span>${HIGHDAY}</span>`;
+
+    const minPrice = document.createElement('p');
+    minPrice.innerHTML = `El Precio más bajo del día es de: <span>${LOWDAY}</span>`;
+
+    const lastHours = document.createElement('p');
+    lastHours.innerHTML = `La variación de las últimas 24 horas es del: <span>${CHANGEPCT24HOUR}%</span>`;
+
+    const lastUpdate = document.createElement('p');
+    lastUpdate.innerHTML = `Última actualizacón: <span>${LASTUPDATE}</span>`;
+    
+    result.appendChild(price);
+    result.appendChild(maxPrice);
+    result.appendChild(minPrice);
+    result.appendChild(lastHours);
+    result.appendChild(lastUpdate);
+}
+
+function cleanHTML() {
+    while (result.firstChild) {
+        result.removeChild(result.firstChild);
+    }
 }

@@ -14,7 +14,18 @@ function validateSearch(cheems) {
 
     if (search.length < 3) {
         showMsg('Búsqueda muy corta... Añade más información.');
+        return;
     }
+    consultAPI(search);
+}
+
+function consultAPI(search) {
+    const githubURL = `https://jobs.github.com/positions.json?search=${search}`;
+
+    const url = `https://api.allorigin.win/get?url=${ encodeURIComponent(githubURL) }`;
+
+    axios.get(url)
+        .then(answer => console.log(answer));
 }
 
 function showMsg(msg) {

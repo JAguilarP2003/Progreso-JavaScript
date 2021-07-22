@@ -1,4 +1,5 @@
 import { showAlert } from './funciones.js'
+import { newCustomer } from './API.js'
 
 (function () {
     const form = document.querySelector('#formulario');
@@ -26,7 +27,7 @@ import { showAlert } from './funciones.js'
             return;
         }
 
-        console.log('Sí pasó la validación.');
+        newCustomer(customer);
     }
 
     function validate(obj) {

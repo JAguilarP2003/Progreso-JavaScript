@@ -1,3 +1,5 @@
+import { showAlert } from './funciones.js'
+
 (function () {
     const form = document.querySelector('#formulario');
     form.addEventListener('submit', validateCustomer);
@@ -20,7 +22,7 @@
 
         if (validate(customer)) {
             // Mostar mensaje.
-            console.log('Todos los campos son obligatorios.');
+            showAlert('Todos los campos son obligatorios.');
             return;
         }
 

@@ -1,9 +1,12 @@
 import { getCustomers } from './API.js';
+import { deleteCustomer } from './API.js';
 
 (function () {
     const list = document.querySelector('#listado-clientes');
 
     document.addEventListener('DOMContentLoaded', showCustomers);
+
+    list.addEventListener('click', confirmDelete);
 
     async function showCustomers() {
         const customers = await getCustomers();
@@ -32,5 +35,16 @@ import { getCustomers } from './API.js';
 
             list.appendChild(row);
         });
+    }
+
+    function confirmDelete(cheems) {
+        if (cheems.target.classList.contains('eliminar')) {
+            const customerID = parseInt(cheems.target.dataset.cliente);
+            const confirmAlert = confirm('Deseas eliminar ese registro?');
+
+            if (confirmAlert) {
+                deleteCustomer(customerID);
+            }
+        }
     }
 })();

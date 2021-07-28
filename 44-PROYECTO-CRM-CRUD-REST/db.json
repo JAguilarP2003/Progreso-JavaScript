@@ -1,11 +1,32 @@
 {
   "clientes": [
     {
-      "name": "Juan NUEVO!",
-      "email": "correo2@correo.com",
-      "tel": "12",
-      "company": "12212",
-      "id": 26
+      "name": "Juan",
+      "email": "jd@gmail.com",
+      "tel": "434324213",
+      "company": "Sena",
+      "id": 1
+    },
+    {
+      "name": "Daniel",
+      "email": "daniel@gmail.com",
+      "tel": "543543543",
+      "company": "Expreso Bolivariano",
+      "id": 2
+    },
+    {
+      "name": "David",
+      "email": "rosadito20021@gmail.com",
+      "tel": "684254579",
+      "company": "Renkinjutsushi",
+      "id": 3
+    },
+    {
+      "name": "Aguilar",
+      "email": "edwel@gmail.com",
+      "tel": "658868632",
+      "company": "Tupperware",
+      "id": 4
     }
   ]
 }

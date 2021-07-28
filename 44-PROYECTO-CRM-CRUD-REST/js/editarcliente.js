@@ -1,4 +1,5 @@
-import { getCustomer } from './API.js';
+import { getCustomer, updateCustomer } from './API.js';
+import { showAlert, validate } from './funciones.js'
 
 (function () {
 
@@ -17,6 +18,10 @@ import { getCustomer } from './API.js';
         const customer = await getCustomer(IDCustomer);
 
         showCustomer(customer);
+
+        // Submit al formulario.
+        const form = document.querySelector('#formulario');
+        form.addEventListener('submit', validateCustomer);
     });
 
     function showCustomer(customer) {
@@ -26,7 +31,27 @@ import { getCustomer } from './API.js';
         inputEmail.value = email;
         inputTel.value = tel;
         inputCompany.value = company;
-        inputId = id;
+        inputId.value = id;
+    }
+
+    function validateCustomer(cheems) {
+        cheems.preventDefault();
+        const customer = {
+            name: inputName.value,
+            email: inputEmail.value,
+            tel: inputTel.value,
+            company: inputCompany.value,
+            id: parseInt(inputId.value)
+        }
+
+        if (validate(customer)) {
+            // Mostar mensaje.
+            showAlert('Todos los campos son obligatorios.');
+            return;
+        }
+
+        // Reescribe el objeto.
+        updateCustomer(customer);
     }
 })();
 

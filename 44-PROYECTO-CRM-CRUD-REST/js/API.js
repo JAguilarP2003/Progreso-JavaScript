@@ -47,3 +47,19 @@ export const getCustomer = async id => {
         console.log(error);
     }
 }
+
+// Actualiza un registro.
+export const updateCustomer = async customer => {
+    try {
+        await fetch(`${url}/${customer.id}`, {
+            method:'PUT',
+            body: JSON.stringify(customer),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        window.location.href = "index.html";
+    } catch (error) {
+        console.log(error);
+    }
+}

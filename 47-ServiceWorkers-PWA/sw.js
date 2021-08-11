@@ -31,4 +31,11 @@ self.addEventListener('activate', cheems => {
 // Evento Fetch para descargar Archivos estáticos.
 self.addEventListener('fetch', cheems => {
     console.log('Fetch...', cheems);
+
+    cheems.respondWith(
+        caches.match(cheems.request)
+            .then(respuestaCache => {
+                return respuestaCache
+            })
+    )
 })

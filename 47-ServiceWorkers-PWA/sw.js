@@ -1,11 +1,13 @@
 const nombreCache = 'apv-v1';
 const archivos = [
     '/',
-    'index.html',
-    'css/bootstrap.css',
-    'css/styles.css',
-    'js/app.js',
-    'js/apv.js'
+    '/css/bootstrap.css',
+    '/css/styles.css',
+    '/index.html',
+    '/error.html',
+    '/js/app.js',
+    '/js/apv.js',
+    '/manifest.json'
 ]
 
 // Cuando se instala el Service Worker.
@@ -33,9 +35,9 @@ self.addEventListener('fetch', cheems => {
     console.log('Fetch...', cheems);
 
     cheems.respondWith(
-        caches.match(cheems.request)
-            .then(respuestaCache => {
-                return respuestaCache
-            })
-    )
+        caches
+          .match(cheems.request)
+          .then(respuestaCache => (respuestaCache ? respuestaCache : caches.match('/error.html')))
+        // .catch(() => window.location.replace(errorPage))
+      )
 })

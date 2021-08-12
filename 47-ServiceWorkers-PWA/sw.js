@@ -1,4 +1,4 @@
-const nombreCache = 'apv-v1';
+const nombreCache = 'apv-v2';
 const archivos = [
     '/',
     '/css/bootstrap.css',
@@ -27,7 +27,18 @@ self.addEventListener('install', cheems => {
 self.addEventListener('activate', cheems => {
     console.log('Service Worker Activado');
 
-    console.log(cheems);
+    cheems.waitUntil(
+    caches.keys()
+        .then(keys => {
+            // console.log(keys);
+
+            return Promise.all(
+                keys
+                    .filter(key => key !== nombreCache)
+                    .map(key => caches.delete(key)) // Borra los demás
+            )
+        })
+    )
 });
 
 // Evento Fetch para descargar Archivos estáticos.

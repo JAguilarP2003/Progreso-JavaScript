@@ -133,7 +133,7 @@ function mostrarCotizacionHTML(cotizacion) {
     const  { PRICE, HIGHDAY, LOWDAY, CHANGEPCT24HOUR, LASTUPDATE } = cotizacion;
 
 
-    debugger;
+    debugger; // Detiene la ejecución del código y muestra todas las variables disponible y sus valores.
 
     const precio = document.createElement('p');
     precio.classList.add('precio');

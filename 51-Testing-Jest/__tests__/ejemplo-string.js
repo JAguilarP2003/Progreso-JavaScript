@@ -1,4 +1,4 @@
-const password = "";
+const password = "123456";
 
 describe('Valida que el password no esté vacío', () => {
     test('Que el password tenga 6 caracteres', () => {

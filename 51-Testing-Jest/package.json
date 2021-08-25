@@ -4,11 +4,13 @@
   "description": "Aprendiendo JEST",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --env=jsdom"
   },
   "author": "Juan David Aguilar Peña",
   "license": "ISC",
   "devDependencies": {
+    "@babel/preset-env": "^7.15.0",
+    "babel-jest": "^27.0.6",
     "jest": "^27.0.6"
   }
 }
